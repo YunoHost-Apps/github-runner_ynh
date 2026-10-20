@@ -54,10 +54,10 @@ ram.runtime = "50M"
     example = "xxx"
 
     [install.runner_labels]
-    ask.en = "The runner's labels (comma-separated list)"
-    ask.fr = "Les labels de l'exécuteur (liste séparée par des virgules)"
+    ask.en = "The runner's labels (comma-separated list, or default)"
+    ask.fr = "Les labels de l'exécuteur (liste séparée par des virgules, ou default)"
     type = "string"
-    # default = "self-hosted:host"
+    default = "default"
     help.en = "They should be written as follows, change <label-name> : <label-name1>:host,<label-name2>:host"
     help.fr = "Ils doivent s'écrire sous la forme suivante en changeant <label-name> : <label-name1>:host,<label-name2>:host"
 

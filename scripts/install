@@ -33,14 +33,18 @@ mkdir -p "$install_dir/work"
 chown "$app:$app" "$install_dir/work"
 
 pushd "$install_dir/sources"
-# FIXME: --disableupdate?
-ynh_exec_as_app ./config.sh \
-    --unattended \
-    --url "$project_url" \
-    --token "$runner_token" \
-    --name "$runner_name" \
-    --labels "$runner_labels" \
-    --work "$install_dir/work"
+    config_args=(
+        # FIXME: --disableupdate?
+        --unattended
+        --url "$project_url"
+        --token "$runner_token"
+        --name "$runner_name"
+        --work "$install_dir/work"
+    )
+    if [ "$runner_labels" != "default" ]; then
+        config_args+=(--labels "$runner_labels")
+    fi
+    ynh_exec_as_app ./config.sh "${config_args[@]}"
 popd
 
 
