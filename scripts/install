@@ -1,0 +1,74 @@
+#!/bin/bash
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
+
+if [ -z "$runner_token" ]; then
+    runner_token="$(hostname)"
+    ynh_app_setting_set --key=runner_token --value="$runner_token"
+fi
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir/sources"
+
+#=================================================
+# APP INITIAL CONFIGURATION
+#=================================================
+ynh_script_progression "Setting $app up..."
+
+mkdir -p "$install_dir/work"
+chown "$app:$app" "$install_dir/work"
+
+push "$install_dir/sources"
+# FIXME: --disableupdate?
+ynh_exec_as_app ./config.sh \
+    --unattended \
+    --url "$project_url" \
+    --token "$runner_token" \
+    --name "$runner_name" \
+    --labels "$runner_labels" \
+    --work "$install_dir/work"
+popd
+
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+# Create a dedicated systemd config
+ynh_config_add_systemd
+
+yunohost service add "$app" \
+    --description="Github actions runner $runner_name" \
+    --log="/var/log/$app/$app.log"
+
+# Use logrotate to manage application logfile(s)
+ynh_config_add_logrotate
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"

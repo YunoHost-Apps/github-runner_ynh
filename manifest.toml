@@ -7,7 +7,7 @@ name = "Github Runner"
 description.en = "Self-hosted runner for Github Actions"
 description.fr = "Runner auto-hébergé pour Github Actions"
 
-version = "2.337~ynh1"
+version = "2.338.0~ynh1"
 
 maintainers = []
 
@@ -31,13 +31,35 @@ ram.build = "50M"
 ram.runtime = "50M"
 
 [install]
-    [install.token]
+    [install.project_url]
+    ask.en = "Please enter the Github project URL (organization or repository)"
+    ask.fr = "Veuillez entrer l'URL du project github (organisation ou dépôt)"
+    type = "string"
+    example = "https://github.com/YunoHost"
+
+    [install.runner_token]
     ask.en = "Please enter the Github Actions token for this Runner"
     ask.fr = "Veuillez entrer le jeton Github Actions pour ce Runner"
     help.en = "This token can be retrieved at this location: Github Project->Settings->Actions->Runner"
     help.fr = "Ce token peut être récupéré à cet emplacement : Projet Github->Settings->Actions->Runner"
     type = "string"
     example = "xxx"
+
+    [install.runner_name]
+    ask.en = "Please enter the name for this Runner"
+    ask.fr = "Veuillez entrer le nom pour ce Runner"
+    help.en = "If unset, defaults to the system hostname"
+    help.fr = "Si non spécifié, sera le nom d'hôte du système"
+    type = "string"
+    example = "xxx"
+
+    [install.runner_labels]
+    ask.en = "The runner's labels (comma-separated list)"
+    ask.fr = "Les labels de l'exécuteur (liste séparée par des virgules)"
+    type = "string"
+    # default = "self-hosted:host"
+    help.en = "They should be written as follows, change <label-name> : <label-name1>:host,<label-name2>:host"
+    help.fr = "Ils doivent s'écrire sous la forme suivante en changeant <label-name> : <label-name1>:host,<label-name2>:host"
 
     # [install.docker_image]
     # ask.en = "Please enter the Docker image"
@@ -49,11 +71,11 @@ ram.runtime = "50M"
 [resources]
     [resources.sources.main]
     rename = "actions-runner.tar.gz"
-    amd64.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-x64-2.337.0.tar.gz"
+    amd64.url = "https://github.com/actions/runner/releases/download/v2.338.0/actions-runner-linux-x64-2.338.0.tar.gz"
     amd64.sha256 = "af4b794c1bc41d73d40535e3fe092a39f9679cd8d965954c2aca25a05ca41d32"
-    arm64.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-arm64-2.337.0.tar.gz"
+    arm64.url = "https://github.com/actions/runner/releases/download/v2.338.0/actions-runner-linux-arm64-2.338.0.tar.gz"
     arm64.sha256 = "628b4a7258487b80c1d3c221095a7ded349f5ae0175fd3dfab708d07428f041b"
-    armhf.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-arm-2.337.0.tar.gz"
+    armhf.url = "https://github.com/actions/runner/releases/download/v2.338.0/actions-runner-linux-arm-2.338.0.tar.gz"
     armhf.sha256 = "1d6a7688d2aca1a1fecd4df5d473e4aa4226c1f1785ff915cf84049665a3483f"
 
     autoupdate.upstream = "https://github.com/actions/runner"
