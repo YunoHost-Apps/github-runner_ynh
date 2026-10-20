@@ -1,0 +1,79 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "github-runner"
+name = "Github Runner"
+description.en = "Self-hosted runner for Github Actions"
+description.fr = "Runner auto-hébergé pour Github Actions"
+
+version = "2.337~ynh1"
+
+maintainers = []
+
+[upstream]
+license = "MIT"
+website = "https://github.com/features/actions"
+admindoc = "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners"
+code = "https://github.com/actions/runner"
+
+[integration]
+yunohost = ">= 12.1.17"
+helpers_version = "2.1"
+architectures = ["amd64", "armhf", "arm64"]
+multi_instance = false
+
+ldap = "not_relevant"
+sso = "not_relevant"
+
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.token]
+    ask.en = "Please enter the Github Actions token for this Runner"
+    ask.fr = "Veuillez entrer le jeton Github Actions pour ce Runner"
+    help.en = "This token can be retrieved at this location: Github Project->Settings->Actions->Runner"
+    help.fr = "Ce token peut être récupéré à cet emplacement : Projet Github->Settings->Actions->Runner"
+    type = "string"
+    example = "xxx"
+
+    # [install.docker_image]
+    # ask.en = "Please enter the Docker image"
+    # ask.fr = "Veuillez entrer l'image du Docker"
+    # type = "string"
+    # example = "ruby:2.1"
+    # default = "alpine:latest"
+
+[resources]
+    [resources.sources.main]
+    rename = "actions-runner.tar.gz"
+    amd64.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-x64-2.337.0.tar.gz"
+    amd64.sha256 = "af4b794c1bc41d73d40535e3fe092a39f9679cd8d965954c2aca25a05ca41d32"
+    arm64.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-arm64-2.337.0.tar.gz"
+    arm64.sha256 = "628b4a7258487b80c1d3c221095a7ded349f5ae0175fd3dfab708d07428f041b"
+    armhf.url = "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-arm-2.337.0.tar.gz"
+    armhf.sha256 = "1d6a7688d2aca1a1fecd4df5d473e4aa4226c1f1785ff915cf84049665a3483f"
+
+    autoupdate.upstream = "https://github.com/actions/runner"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset.amd64 = "actions-runner-linux-x64-.*.tar.gz"
+    autoupdate.asset.arm64 = "actions-runner-linux-arm64-.*.tar.gz"
+    autoupdate.asset.armhf = "actions-runner-linux-arm-.*.tar.gz"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.apt]
+    packages = [
+        # "ca-certificates",
+        # "git",
+        # "curl",
+        # "tar",
+    ]
+
+    # extras.docker.repo = "https://download.docker.com/linux/debian bullseye stable"
+    # extras.docker.key = "https://download.docker.com/linux/debian/gpg"
+    # extras.docker.packages = "docker-ce, docker-ce-cli, containerd.io"
