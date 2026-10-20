@@ -18,10 +18,6 @@ Self-hosted runner for Github Actions
 <a href="https://github.com/YunoHost-Apps/github-runner_ynh/issues"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_report_an_issue.svg"/></a>
 </div>
 
-
-## Screenshots
-![Screenshot of Github Runner](./doc/screenshots/ci-cd-test-deploy-illustration_2x.png)
-
 ## 📦 Developer info
 
 [![Automatic tests level](https://apps.yunohost.org/badge/cilevel/github-runner)](https://ci-apps.yunohost.org/ci/apps/github-runner/)
