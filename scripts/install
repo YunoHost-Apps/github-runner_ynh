@@ -21,22 +21,19 @@ fi
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-ls -lah "$install_dir"
-chown "$app:$app" "$install_dir"
-chmod 750 "$install_dir"
-
 # Download, check integrity, uncompress and patch the source from manifest.toml
-ynh_setup_source --dest_dir="$install_dir/sources"
+ynh_setup_source --dest_dir="$install_dir/github-runner"
+chown -R "$app:$app" "$install_dir/github-runner"
 
 #=================================================
 # APP INITIAL CONFIGURATION
 #=================================================
-ynh_script_progression "Setting $app up..."
+ynh_script_progression "Setting up $app..."
 
 mkdir -p "$install_dir/work"
 chown "$app:$app" "$install_dir/work"
 
-pushd "$install_dir/sources"
+pushd "$install_dir/github-runner"
     config_args=(
         # FIXME: --disableupdate?
         --unattended
